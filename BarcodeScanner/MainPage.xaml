@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="BarcodeScanner.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+             Title="Barcode Scanner">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Camera Preview -->
+        <zxing:CameraBarcodeReaderView x:Name="cameraBarcodeReaderView"
+                                       Grid.Row="0"
+                                       BarcodesDetected="BarcodesDetected"
+                                       IsDetecting="{Binding IsDetecting}"
+                                       CameraLocation="Rear">
+        </zxing:CameraBarcodeReaderView>
+
+        <!-- Scan Result -->
+        <Frame Grid.Row="1" 
+               BackgroundColor="White" 
+               HasShadow="True" 
+               Margin="10"
+               Padding="15">
+            <StackLayout>
+                <Label Text="ผลการสแกน:" 
+                       FontSize="16" 
+                       FontAttributes="Bold"/>
+                <Label x:Name="resultLabel" 
+                       Text="กรุณาสแกน barcode"
+                       FontSize="14"
+                       TextColor="Gray"/>
+                <Label x:Name="formatLabel"
+                       Text=""
+                       FontSize="12"
+                       TextColor="Blue"/>
+            </StackLayout>
+        </Frame>
+
+        <!-- Control Buttons -->
+        <StackLayout Grid.Row="2" 
+                     Orientation="Horizontal" 
+                     HorizontalOptions="Center"
+                     Margin="10">
+            <Button x:Name="toggleButton"
+                    Text="หยุดสแกน"
+                    Clicked="OnToggleClicked"
+                    BackgroundColor="DodgerBlue"
+                    TextColor="White"
+                    WidthRequest="120"/>
+            <Button Text="เคลียร์"
+                    Clicked="OnClearClicked"
+                    BackgroundColor="Orange"
+                    TextColor="White"
+                    WidthRequest="120"
+                    Margin="10,0,0,0"/>
+        </StackLayout>
+
+        <!-- History List -->
+        <Frame Grid.Row="3" 
+               BackgroundColor="LightGray" 
+               Margin="10"
+               Padding="10"
+               HeightRequest="150">
+            <StackLayout>
+                <Label Text="ประวัติการสแกน:" 
+                       FontSize="14" 
+                       FontAttributes="Bold"/>
+                <ScrollView>
+                    <StackLayout x:Name="historyStack"/>
+                </ScrollView>
+            </StackLayout>
+        </Frame>
+    </Grid>
+
+</ContentPage>
